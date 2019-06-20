@@ -1,0 +1,62 @@
+
+---
+- hosts: web
+  remote_user: ansible
+  sudo: yes
+  gather_facts: yes
+  
+  vars:
+    upkgs:
+      - apache2
+
+    cpkgs:
+      - httpd
+  
+  tasks:
+  - name: install pkgs
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items: "{{ upkgs }}"
+    when: ansible_distribution=="Ubuntu"
+
+  - name: install pkgs
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items: "{{ cpkgs }}"
+    when: ansible_distribution=="CentOS"
+    
+    notify:
+      - start apache2
+      - start httpd
+
+  - name: upload a file
+    copy:
+      src: test.html
+      dest: /var/www/html/   
+  
+  handlers:
+  - name: start apache2
+    service: 
+      name: apache2
+      state: started
+    when: ansible_distribution=="Ubuntu"
+    
+  - name: start httpd 
+    systemd: 
+      name: httpd
+      state: started
+    when: ansible_distribution=="CentOS"
+
+
+
+
+
+
+
+
+
+
+
+
