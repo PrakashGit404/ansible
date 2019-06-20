@@ -16,11 +16,11 @@
       - /opt/apache-tomcat-8.5.41.tar.gz
 
   tasks: 
-#  - name: download pkgs
-#    get_url:
-#      url: "{{ item }}"
-#      dest: "{{ path }}"
-#    with_items: "{{ urls }}"
+  - name: download pkgs
+    get_url:
+      url: "{{ item }}"
+      dest: "{{ path }}"
+    with_items: "{{ urls }}"
   
   - name: extract pkgs
     unarchive:
