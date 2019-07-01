@@ -1,0 +1,12 @@
+---
+# handlers file for server
+
+- name: start apache2
+  service:
+    name: apache2
+    state: restarted
+
+- name: start apache
+  systemd:
+    name: httpd
+    state: restarted

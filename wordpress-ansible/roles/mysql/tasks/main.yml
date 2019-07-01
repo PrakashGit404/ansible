@@ -1,0 +1,15 @@
+---
+# tasks file for mysql
+- name: create mysql DB
+  mysql_db:
+    name: "{{ wp_mysql_db }}"
+    state: present
+#  when: ansible_distribution=="Ubuntu"
+
+- name: create mysql user
+  mysql_user:
+    name: "{{ wp_mysql_user }}"
+    password: "{{ wp_mysql_password }}"
+    priv: '*.*:ALL'
+#  when: ansible_distribution=="Ubuntu"
+

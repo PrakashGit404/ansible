@@ -1,0 +1,4 @@
+---
+uphpext:
+  - php5-gd 
+  - libssh2-php

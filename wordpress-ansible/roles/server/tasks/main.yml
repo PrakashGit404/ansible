@@ -1,0 +1,47 @@
+---
+# tasks file for server
+
+- name: update cache
+  yum:
+    update_cache: yes
+    cache_valid_time: 3600
+    sudo: yes
+  when: ansible_distribution=="CentOS"
+
+- name: install pkgs
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - apache2
+    - mysql-server
+    - php5-mysql
+    - php5
+    - libapache2-mod-php5
+    - php5-mcrypt
+    - python-mysqldb
+  when: ansible_distribution=="Ubuntu"
+
+  notify:
+    - start apache2
+  
+- name: install pkgs
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - httpd
+    - mariadb
+    - mariadb-server
+    - php
+    - php-common
+    - php-mysql 
+    - php-gd 
+    - php-xml 
+    - php-mbstring 
+    - php-mcrypt
+  when: ansible_distribution=="CentOS"
+
+  notify:
+    - start apache
+

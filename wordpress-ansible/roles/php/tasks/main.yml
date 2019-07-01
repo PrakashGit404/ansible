@@ -1,0 +1,10 @@
+---
+# tasks file for php
+- name: install php extensions
+  apt: 
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - php5-gd 
+    - libssh2-php
+  when: ansible_distribution=="Ubuntu"
