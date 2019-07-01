@@ -1,0 +1,8 @@
+- hosts: web
+  remote_user: ansible
+  sudo: yes
+  roles:
+    - server
+    - php
+    - mysql
+    - wordpress
