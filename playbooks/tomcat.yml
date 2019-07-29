@@ -7,7 +7,7 @@
   
   vars:
     path: "/opt/"
-    envpath: "export JAVA_HOME='/opt/jdk1.8.0_211'\n export PATHA=$JAVA_HOME/bin:$PATH\n\n export CATALINA_HOME='/opt/apache-tomcat-8.5.41'\n export PATH=$CATALINA_HOME/bin:$PATH"
+    envpath: "export JAVA_HOME='/opt/jdk1.8.0_211'\n export PATH=$JAVA_HOME/bin:$PATH\n\n export CATALINA_HOME='/opt/apache-tomcat-8.5.41'\n export PATH=$CATALINA_HOME/bin:$PATH"
     urls:
       - https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz?AuthParam=1560177419_5ceafd3f4b32b17c350f6bef8ab95b8f  
       - http://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz
