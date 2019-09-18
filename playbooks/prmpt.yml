@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: yes
+  vars_prompt:
+  - name: "name"
+    prompt: "Enter ur name"
+  - name: "wish"
+    prompt: "wish"
+
+  tasks:
+  - name: display a mmsg
+    debug:
+      msg: "Iam {{ name }} . iam wishing you {{ wish }} ."
