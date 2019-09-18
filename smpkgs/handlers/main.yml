@@ -1,0 +1,11 @@
+---
+# handlers file for smpkgs
+- name: restart apache
+  service:
+    name: apache2
+    state: restarted
+
+- name: restart httpd
+  systemd:
+    name: httpd
+    state: restarted

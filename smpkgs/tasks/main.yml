@@ -1,0 +1,11 @@
+---
+# tasks file for smpkgs
+- name: install packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ pkgss  }}"
+  
+  notify:
+    - restart apache
+    - restart httpd

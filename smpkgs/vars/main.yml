@@ -1,0 +1,8 @@
+---
+# vars file for smpkgs
+pkgss:
+ - tree
+ - wget
+ - git-core
+ - curl
+ - vim
