@@ -1,0 +1,48 @@
+---
+- hosts: all
+  remote_user: ansible
+  gather_facts: yes
+  vars:
+  tasks:
+  - name: update repos
+    raw: update_cache=yes
+  - name: install java
+    apt:
+      name: openjdk-8-jre-headless
+      state: present
+    when: ansible_distribution=="Ubuntu"
+  - name: install java in centos
+    yum:
+      name: java-1.8.0-openjdk-devel
+      state: present
+    when: ansible_distribution=="CentOS"
+  - name: check version
+    raw: java -version
+    register: result
+  - name: now display version
+    debug:
+      var: result
+  - name: set path for java
+    lineinfile:
+      dest: /home/ansible/.bashrc
+      line: "{{ item  }}"
+    with_items:
+      - export JAVA_HOME='/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64'
+      - export PATH=$JAVA_HOME/bin:$PATH
+    when: ansible_distribution=="CentOS"
+#  - name: set path for java
+#    copy:
+#      dest: /home/ansible/.bashrc
+#      content: "{{ item  }}"
+#    with_items:
+#      - export JAVA_HOME='/usr/lib/jvm/java-8-openjdk-amd64'
+#      - export PATH=$JAVA_HOME/bin:$PATH
+#    when: ansible_distribution=="Ubuntu"
+  - name: update paths
+    raw: source .bashrc
+  - name: check paths 
+    raw: which java
+    register: resultP
+  - name: display paths
+    debug:
+      var: resultP 
