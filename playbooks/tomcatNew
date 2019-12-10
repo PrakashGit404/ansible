@@ -1,0 +1,61 @@
+---
+- hosts: all
+  remote_user: ansible
+  gather_facts: yes
+
+  vars:
+    - tomcat_url: "http://apachemirror.wuchna.com/tomcat/tomcat-9/v9.0.29/bin/apache-tomcat-9.0.29.tar.gz"
+  tasks:
+  - name: update caches
+    raw: update_cache=yes
+
+  - name: create a group
+    group:
+      name: tomcat
+      state: present
+
+  - name: dwnload tomcat
+    get_url:
+	  url: "{{ tomcat_url }}"
+	  dest: /tmp
+	  
+  - name: mkdir /opt/tomcat
+      file:
+      path: /opt/tomcat
+      state: directory
+  
+  - name: unzip the files
+    unarchive: 
+      src: /tmp/apache-tomcat-9.0.29.tar.gz 
+      dest: /opt/tomcat
+        
+  - name: add user & adduser to group
+    user:
+      name: tomcat
+      state: present
+      shell: /bin/false
+      home: /opt/tomcat
+      group: tomcat
+  - name: create symbolic link
+    file:
+      src: /opt/tomcat/apache-tomcat-9.0.29
+      dest: /opt/tomcat/latest
+      state: link
+  - name: change directory perms
+    file:
+      dest: /opt/tomcat
+      owner: tomcat
+      mode: u=rwx,g=rx,o=rx
+      recurse: yes
+  - name: execute sheel ecript
+    raw: sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'
+  - name: create tomcat service
+    copy:
+      src: /home/ansible/playbooks/tomcat.service
+      dest: /etc/systemd/system/tomcat.service
+  - name: daemon reload
+    systemd:
+      name: tomcat
+      daemon_reload: yes
+      enabled: yes
+      state: restarted
